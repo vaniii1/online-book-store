@@ -1,6 +1,6 @@
 package com.example.onlinebookstore.repository;
 
-import com.example.onlinebookstore.dto.BookSearchParametersDto;
+import com.example.onlinebookstore.dto.book.BookSearchParametersDto;
 import org.springframework.data.jpa.domain.Specification;
 
 public interface SpecificationBuilder<T> {
