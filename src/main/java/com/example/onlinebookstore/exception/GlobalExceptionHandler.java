@@ -27,6 +27,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(exception.getMessage());
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFountException(
+            EntityNotFoundException exception, WebRequest request
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
