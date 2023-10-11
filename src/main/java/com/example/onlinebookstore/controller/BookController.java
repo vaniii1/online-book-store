@@ -33,7 +33,7 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "Get all books",
-            description = "Receiving all books that are not deleted")
+            description = "Receive all books that are not deleted")
     public List<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
@@ -41,7 +41,7 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     @Operation(summary = "Create a new book",
-            description = "Creating a new book with appropriate parameters")
+            description = "Create a new book with appropriate parameters")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
@@ -66,16 +66,16 @@ public class BookController {
     @PutMapping("/{id}")
     @Operation(summary = "Update a book",
             description = "Updating a book by existing id and new params")
-    public void updateBookById(@PathVariable Long id,
+    public BookDto updateBookById(@PathVariable Long id,
                                @RequestBody @Valid CreateBookRequestDto requestDto) {
-        bookService.update(id, requestDto);
+        return bookService.update(id, requestDto);
     }
 
     @GetMapping("/search")
     @ResponseBody
     @Operation(summary = "Search for books",
             description = "Receiving all books that are correspond to the specified parameters")
-    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters, Pageable pageable) {
         return bookService.searchBooks(searchParameters);
     }
 }
