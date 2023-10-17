@@ -6,7 +6,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,23 +26,23 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @ToString
 @Entity
-@SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-@Table(name = "categories")
-public class Category {
+@Table(name = "shopping_carts")
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    private String description;
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
-    private Set<Book> books = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.EAGER)
+    private Set<CartItem> cartItems = new HashSet<>();
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
-    public void addBook(Book book) {
-        books.add(book);
-        book.getCategories().add(this);
+    public void addItemToCart(CartItem item) {
+        cartItems.add(item);
+        item.setShoppingCart(this);
     }
 }
