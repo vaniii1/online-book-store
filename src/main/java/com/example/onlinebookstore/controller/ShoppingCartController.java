@@ -1,6 +1,6 @@
 package com.example.onlinebookstore.controller;
 
-import com.example.onlinebookstore.dto.cart.CartItemQuantityRequestDto;
+import com.example.onlinebookstore.dto.cart.CartItemQuantityDto;
 import com.example.onlinebookstore.dto.cart.CartItemRequestDto;
 import com.example.onlinebookstore.dto.cart.CartItemResponseDto;
 import com.example.onlinebookstore.dto.cart.CartResponseDto;
@@ -29,34 +29,34 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @GetMapping
-    @Operation(summary = "Get cart for current user",
-            description = "Receive a shopping cart of currently "
-                    + "logged in user with all added items to it")
+    @Operation(summary = "Get Cart for current User",
+            description = "Receive a Shopping Cart of currently "
+                    + "logged in User with all added Items to it")
     public CartResponseDto getCart() {
         return shoppingCartService.getCartForCurrentUser();
     }
 
     @PostMapping
-    @Operation(summary = "Add an item(book) to cart",
-            description = "Add a new book to the shopping cart")
+    @Operation(summary = "Add an Item(Book) to Cart",
+            description = "Add a new book to the Shopping Cart")
     public CartResponseDto addBookToCart(@RequestBody @Valid CartItemRequestDto request) {
         return shoppingCartService.addBookToCart(request);
     }
 
     @PutMapping("/cart-items/{id}")
-    @Operation(summary = "Update a quantity of an item(book)",
-            description = "Update a quantity of a cartItem by it's id")
+    @Operation(summary = "Update a quantity of an Item(Book)",
+            description = "Update a quantity of a CartItem by it's Id")
     public CartItemResponseDto updateQuantityOfItem(
             @PathVariable Long id,
-            @RequestBody @Valid CartItemQuantityRequestDto request
+            @RequestBody @Valid CartItemQuantityDto request
     ) {
         return shoppingCartService.updateQuantityOfBook(id, request);
     }
 
     @DeleteMapping("/cart-items/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete an item(book) from shopping cart",
-            description = "Delete a cartItem that is in your shopping cart by it's id")
+    @Operation(summary = "Delete an Item(Book) from Shopping Cart",
+            description = "Delete a CartItem that is in your Shopping Cart by it's Id")
     public void deleteItemFromShoppingCart(@PathVariable Long id) {
         shoppingCartService.deleteItemFromShoppingCart(id);
     }

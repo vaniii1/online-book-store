@@ -35,7 +35,6 @@ public class BookServiceImpl implements BookService {
         Book model = bookMapper.toModel(request);
         getCategoriesByIds(request.getCategoryIds())
                 .forEach(category -> category.addBook(model));
-        model.setCategories(getCategoriesByIds(request.getCategoryIds()));
         return bookMapper.toDto(bookRepository.save(model));
     }
 
@@ -71,7 +70,6 @@ public class BookServiceImpl implements BookService {
             model.setCoverImage(request.getCoverImage());
             getCategoriesByIds(request.getCategoryIds())
                     .forEach(category -> category.addBook(model));
-            model.setCategories(getCategoriesByIds(request.getCategoryIds()));
             return bookMapper.toDto(bookRepository.save(model));
         }
         throw new EntityNotFoundException("There is no book with id: " + id);

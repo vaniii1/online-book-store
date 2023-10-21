@@ -2,6 +2,7 @@ package com.example.onlinebookstore.service.user.impl;
 
 import com.example.onlinebookstore.dto.user.UserRegistrationRequestDto;
 import com.example.onlinebookstore.dto.user.UserRegistrationResponseDto;
+import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.exception.RegistrationException;
 import com.example.onlinebookstore.mapper.UserMapper;
 import com.example.onlinebookstore.model.Role;
@@ -12,6 +13,8 @@ import com.example.onlinebookstore.service.user.UserService;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +49,18 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(roles);
         return userMapper.toResponseDto(userRepository.save(user));
+    }
+
+    @Override
+    public User getCurrentUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        return userRepository.findByEmail(
+                userDetails.getUsername()).orElseThrow(() ->
+                new EntityNotFoundException("There is no User with email: "
+                        + userDetails.getUsername())
+        );
     }
 }
