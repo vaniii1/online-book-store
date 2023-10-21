@@ -14,6 +14,7 @@
     <name>online-book-store</name>
     <description>online-book-store</description>
     <properties>
+        <start-class>com.example.onlinebookstore.OnlineBookStoreApplication</start-class>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -134,8 +135,8 @@
             <version>1.9.4</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
         </dependency>
     </dependencies>
 
@@ -200,6 +201,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.onlinebookstore.OnlineBookStoreApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -207,9 +212,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>com.example.onlinebookstore.OnlineBookStoreApplication</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>
