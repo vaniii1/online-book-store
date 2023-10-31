@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class BookController {
     @Operation(summary = "Create a new book",
             description = "Create a new book with appropriate parameters")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return bookService.save(requestDto);
     }
 

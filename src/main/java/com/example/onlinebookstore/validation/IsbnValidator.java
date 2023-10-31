@@ -1,7 +1,7 @@
 package com.example.onlinebookstore.validation;
 
 import com.example.onlinebookstore.model.Book;
-import com.example.onlinebookstore.repository.book.BookRepository;
+import com.example.onlinebookstore.repository.BookRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.List;

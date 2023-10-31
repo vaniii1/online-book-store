@@ -1,0 +1,1 @@
+DELETE FROM books_categories bc WHERE bc.book_id = 6;

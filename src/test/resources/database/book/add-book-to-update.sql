@@ -1,0 +1,1 @@
+INSERT INTO books (id, author, title, isbn, price) values (6, 'Brothers Grimm', 'Rapunzel', '2151513513', 31);

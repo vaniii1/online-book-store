@@ -8,8 +8,8 @@ import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.BookMapper;
 import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.model.Category;
-import com.example.onlinebookstore.repository.book.BookRepository;
-import com.example.onlinebookstore.repository.book.BookSpecificationBuilder;
+import com.example.onlinebookstore.repository.BookRepository;
+import com.example.onlinebookstore.repository.BookSpecificationBuilder;
 import com.example.onlinebookstore.repository.category.CategoryRepository;
 import com.example.onlinebookstore.service.book.BookService;
 import java.util.Collection;
@@ -33,8 +33,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto save(CreateBookRequestDto request) {
         Book model = bookMapper.toModel(request);
-        getCategoriesByIds(request.getCategoryIds())
-                .forEach(category -> category.addBook(model));
+        if (request.getCategoryIds() != null) {
+            getCategoriesByIds(request.getCategoryIds())
+                    .forEach(category -> category.addBook(model));
+        }
         return bookMapper.toDto(bookRepository.save(model));
     }
 
@@ -48,7 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookById(Long id) {
-        return bookRepository.findBookById(id).map(bookMapper::toDto)
+        return bookRepository.findById(id).map(bookMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("There is no Book with id: " + id));
     }
 
@@ -59,17 +61,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(Long id, CreateBookRequestDto request) {
-        Optional<Book> optionalBook = bookRepository.findBookById(id);
+        Optional<Book> optionalBook = bookRepository.findById(id);
         if (optionalBook.isPresent()) {
-            Book model = optionalBook.get();
-            model.setTitle(request.getTitle());
-            model.setAuthor(request.getAuthor());
-            model.setIsbn(request.getIsbn());
-            model.setPrice(request.getPrice());
-            model.setDescription(request.getDescription());
-            model.setCoverImage(request.getCoverImage());
-            getCategoriesByIds(request.getCategoryIds())
-                    .forEach(category -> category.addBook(model));
+            Book model = bookMapper.toModel(request);
+            model.setId(id);
+            if (request.getCategoryIds() != null) {
+                getCategoriesByIds(request.getCategoryIds())
+                        .forEach(category -> category.addBook(model));
+            }
             return bookMapper.toDto(bookRepository.save(model));
         }
         throw new EntityNotFoundException("There is no book with id: " + id);
@@ -88,7 +87,8 @@ public class BookServiceImpl implements BookService {
     public List<BookDtoWithoutCategoryIds> findAllBooksByCategoryIds(
             Long categoryId, Pageable pageable
     ) {
-        return bookRepository.findAllByCategoryIds(categoryId, pageable).stream()
+        return bookRepository.findAllByCategoryIds(categoryId, pageable)
+                .stream()
                 .map(bookMapper::toDtoWithoutCategoryIds)
                 .toList();
     }
@@ -97,7 +97,7 @@ public class BookServiceImpl implements BookService {
         return ids.stream()
                 .map(categoryRepository::findById)
                 .map(category -> category.orElseThrow(() ->
-                        new EntityNotFoundException("there is no Category: " + category)))
+                        new EntityNotFoundException("Category wasn't found")))
                 .collect(Collectors.toSet());
     }
 }

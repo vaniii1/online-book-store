@@ -1,0 +1,1 @@
+INSERT INTO books (id, author, title, isbn, price) values (6, 'Ernest Hemingway', 'the old man and the sea', '1535151351', 17)

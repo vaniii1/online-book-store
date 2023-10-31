@@ -7,7 +7,6 @@ import com.example.onlinebookstore.mapper.CategoryMapper;
 import com.example.onlinebookstore.model.Category;
 import com.example.onlinebookstore.repository.category.CategoryRepository;
 import com.example.onlinebookstore.service.category.CategoryService;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -46,10 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponseDto update(Long id, CategoryRequestDto request) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         if (optionalCategory.isPresent()) {
-            Category category = optionalCategory.get();
-            category.setName(request.getName());
-            category.setDescription(request.getDescription());
-            category.setBooks(new HashSet<>());
+            Category category = categoryMapper.toModel(request);
+            category.setId(id);
             return categoryMapper.toDto(categoryRepository.save(category));
         }
         throw new EntityNotFoundException("Couldn't find Category by id: " + id);

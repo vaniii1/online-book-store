@@ -11,7 +11,7 @@ import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.model.CartItem;
 import com.example.onlinebookstore.model.ShoppingCart;
 import com.example.onlinebookstore.model.User;
-import com.example.onlinebookstore.repository.book.BookRepository;
+import com.example.onlinebookstore.repository.BookRepository;
 import com.example.onlinebookstore.repository.cart.ShoppingCartRepository;
 import com.example.onlinebookstore.repository.cartitem.CartItemRepository;
 import com.example.onlinebookstore.service.cart.ShoppingCartService;
@@ -83,7 +83,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     private Book findBookById(Long bookId) {
-        return bookRepository.findBookById(bookId)
+        return bookRepository.findById(bookId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("There is no Book with id: " + bookId));
     }
