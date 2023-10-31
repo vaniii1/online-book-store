@@ -1,9 +1,7 @@
-package com.example.onlinebookstore.repository.book;
+package com.example.onlinebookstore.repository;
 
 import com.example.onlinebookstore.exception.NoSuchSpecificationException;
 import com.example.onlinebookstore.model.Book;
-import com.example.onlinebookstore.repository.SpecificationProvider;
-import com.example.onlinebookstore.repository.SpecificationProviderManager;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

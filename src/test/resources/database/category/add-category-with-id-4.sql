@@ -1,0 +1,1 @@
+INSERT INTO categories (id, name) values (4, 'short story');

@@ -1,0 +1,1 @@
+DELETE FROM books b WHERE b.id = 6;
