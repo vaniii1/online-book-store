@@ -1,5 +1,7 @@
 package com.example.onlinebookstore.controller;
 
+import static com.example.onlinebookstore.controller.BookControllerTest.addCategories;
+import static com.example.onlinebookstore.controller.BookControllerTest.deleteCategories;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -8,19 +10,15 @@ import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import com.example.onlinebookstore.dto.category.CategoryResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 import javax.sql.DataSource;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.jdbc.Sql;
@@ -54,20 +52,9 @@ class CategoryControllerTest {
                 .webAppContextSetup(webApplicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
-
-        firstExpected = new CategoryResponseDto()
-                .setId(ID_ONE)
-                .setName("fantasy")
-                .setDescription("actions cannot be returned in the real world");
-        secondExpected = new CategoryResponseDto()
-                .setId(ID_TWO)
-                .setName("fairy tail")
-                .setDescription("short stories for children");
-        thirdExpected = new CategoryResponseDto()
-                .setId(ID_THREE)
-                .setName("romance")
-                .setDescription("story about lovers");
-
+        firstExpected = createFirstCategoryResponse();
+        secondExpected = createSecondCategoryResponse();
+        thirdExpected = createThirdCategoryResponse();
         deleteCategories(dataSource);
         addCategories(dataSource);
     }
@@ -75,28 +62,6 @@ class CategoryControllerTest {
     @AfterAll
     static void afterAll(@Autowired DataSource dataSource) {
         deleteCategories(dataSource);
-    }
-
-    @SneakyThrows
-    static void addCategories(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/category/add-three-categories.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void deleteCategories(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/category/delete-categories.sql")
-            );
-        }
     }
 
     @Test
@@ -250,5 +215,26 @@ class CategoryControllerTest {
                         BookDtoWithoutCategoryIds[].class);
         assertThat(actual).isNotNull();
         assertThat(Arrays.stream(actual).toList()).isEqualTo(expected);
+    }
+
+    private static CategoryResponseDto createFirstCategoryResponse() {
+        return new CategoryResponseDto()
+                .setId(ID_ONE)
+                .setName("fantasy")
+                .setDescription("actions cannot be returned in the real world");
+    }
+
+    private static CategoryResponseDto createSecondCategoryResponse() {
+        return new CategoryResponseDto()
+                .setId(ID_TWO)
+                .setName("fairy tail")
+                .setDescription("short stories for children");
+    }
+
+    private static CategoryResponseDto createThirdCategoryResponse() {
+        return new CategoryResponseDto()
+                .setId(ID_THREE)
+                .setName("romance")
+                .setDescription("story about lovers");
     }
 }

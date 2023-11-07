@@ -8,7 +8,7 @@ import com.example.onlinebookstore.dto.cart.CartResponseDto;
 public interface ShoppingCartService {
     CartResponseDto getCartForCurrentUser();
 
-    CartResponseDto addBookToCart(CartItemRequestDto request);
+    CartItemResponseDto addBookToCart(CartItemRequestDto request);
 
     CartItemResponseDto updateQuantityOfBook(Long bookId,
                                              CartItemQuantityDto request);

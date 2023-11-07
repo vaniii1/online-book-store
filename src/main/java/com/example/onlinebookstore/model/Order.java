@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -29,8 +29,8 @@ import org.hibernate.annotations.Where;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
+@Accessors(chain = true)
 @SQLDelete(sql = "UPDATE is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @Table(name = "orders")

@@ -64,41 +64,11 @@ class BookControllerTest {
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
 
-        firstExpected = new BookDto()
-                .setId(ID_ONE)
-                .setTitle("Red Riding Hood")
-                .setAuthor("Brothers Grimm")
-                .setIsbn("51351354315")
-                .setPrice(BigDecimal.valueOf(44))
-                .setCategoryIds(new HashSet<>(Set.of(ID_TWO)));
-        secondExpected = new BookDto()
-                .setId(ID_TWO)
-                .setTitle("Snow White")
-                .setAuthor("Brothers Grimm")
-                .setIsbn("315613616")
-                .setPrice(BigDecimal.valueOf(33))
-                .setCategoryIds(new HashSet<>(Set.of(ID_ONE, ID_TWO)));
-        thirdExpected = new BookDto()
-                .setId(ID_THREE)
-                .setTitle("Sherlock Holmes")
-                .setAuthor("Conan Doyle")
-                .setIsbn("262462462624")
-                .setPrice(BigDecimal.valueOf(55))
-                .setCategoryIds(new HashSet<>(Set.of(ID_ONE)));
-        fourthExpected = new BookDto()
-                .setId(ID_FOUR)
-                .setTitle("Pride And Prejudice")
-                .setAuthor("Jane Austen")
-                .setIsbn("32624624624")
-                .setPrice(BigDecimal.valueOf(22))
-                .setCategoryIds(new HashSet<>(Set.of(ID_THREE)));
-        fifthExpected = new BookDto()
-                .setId(ID_FIVE)
-                .setTitle("Fairy tail")
-                .setAuthor("Stephen King")
-                .setIsbn("3562624626")
-                .setPrice(BigDecimal.valueOf(66))
-                .setCategoryIds(new HashSet<>(Set.of(ID_ONE)));
+        firstExpected = createFirstExpectedBook();
+        secondExpected = createSecondExpectedBook();
+        thirdExpected = createThirdExpectedBook();
+        fourthExpected = createFourthExpectedBook();
+        fifthExpected = createFifthExpectedBook();
 
         deleteBooks(dataSource);
         deleteCategories(dataSource);
@@ -114,72 +84,6 @@ class BookControllerTest {
         deleteBookCategoryConnection(dataSource);
         deleteBooks(dataSource);
         deleteCategories(dataSource);
-    }
-
-    @SneakyThrows
-    static void addCategories(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/category/add-three-categories.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void addBooks(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/book/add-five-books.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void addBookCategoryConnection(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/book/add-categories-to-books.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void deleteBooks(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/book/delete-books.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void deleteCategories(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/category/delete-categories.sql")
-            );
-        }
-    }
-
-    @SneakyThrows
-    static void deleteBookCategoryConnection(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/book/delete-book-category-connection.sql")
-            );
-        }
     }
 
     @Test
@@ -351,5 +255,121 @@ class BookControllerTest {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(expected.size(), actual.length);
         Assertions.assertEquals(expected, Arrays.stream(actual).toList());
+    }
+
+    private static BookDto createFirstExpectedBook() {
+        return new BookDto()
+                .setId(ID_ONE)
+                .setTitle("Red Riding Hood")
+                .setAuthor("Brothers Grimm")
+                .setIsbn("51351354315")
+                .setPrice(BigDecimal.valueOf(44))
+                .setCategoryIds(new HashSet<>(Set.of(ID_TWO)));
+    }
+
+    private static BookDto createSecondExpectedBook() {
+        return new BookDto()
+                .setId(ID_TWO)
+                .setTitle("Snow White")
+                .setAuthor("Brothers Grimm")
+                .setIsbn("315613616")
+                .setPrice(BigDecimal.valueOf(33))
+                .setCategoryIds(new HashSet<>(Set.of(ID_ONE, ID_TWO)));
+    }
+
+    private static BookDto createThirdExpectedBook() {
+        return new BookDto()
+                .setId(ID_THREE)
+                .setTitle("Sherlock Holmes")
+                .setAuthor("Conan Doyle")
+                .setIsbn("262462462624")
+                .setPrice(BigDecimal.valueOf(55))
+                .setCategoryIds(new HashSet<>(Set.of(ID_ONE)));
+    }
+
+    private static BookDto createFourthExpectedBook() {
+        return new BookDto()
+                .setId(ID_FOUR)
+                .setTitle("Pride And Prejudice")
+                .setAuthor("Jane Austen")
+                .setIsbn("32624624624")
+                .setPrice(BigDecimal.valueOf(22))
+                .setCategoryIds(new HashSet<>(Set.of(ID_THREE)));
+    }
+
+    private static BookDto createFifthExpectedBook() {
+        return new BookDto()
+                .setId(ID_FIVE)
+                .setTitle("Fairy tail")
+                .setAuthor("Stephen King")
+                .setIsbn("3562624626")
+                .setPrice(BigDecimal.valueOf(66))
+                .setCategoryIds(new HashSet<>(Set.of(ID_ONE)));
+    }
+
+    @SneakyThrows
+    public static void addCategories(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/category/add-three-categories.sql")
+            );
+        }
+    }
+
+    @SneakyThrows
+    public static void addBooks(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/book/add-five-books.sql")
+            );
+        }
+    }
+
+    @SneakyThrows
+    public static void deleteBooks(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/book/delete-books.sql")
+            );
+        }
+    }
+
+    @SneakyThrows
+    public static void deleteCategories(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/category/delete-categories.sql")
+            );
+        }
+    }
+
+    @SneakyThrows
+    private static void addBookCategoryConnection(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/book/add-categories-to-books.sql")
+            );
+        }
+    }
+
+    @SneakyThrows
+    private static void deleteBookCategoryConnection(DataSource dataSource) {
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(true);
+            ScriptUtils.executeSqlScript(
+                    connection,
+                    new ClassPathResource("database/book/delete-book-category-connection.sql")
+            );
+        }
     }
 }

@@ -3,8 +3,10 @@ package com.example.onlinebookstore.dto.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class UserLoginRequestDto {
     @NotBlank
     @Size(min = 6, max = 40)

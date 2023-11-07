@@ -48,9 +48,9 @@ public class OrderController {
     @PatchMapping("/{id}")
     @Operation(summary = "Update a status of an Order",
             description = "Update a status of an Order by it's Id")
-    public void updateStatus(@PathVariable Long id,
+    public OrderResponseDto updateStatus(@PathVariable Long id,
                              @Valid @RequestBody OrderStatusDto status) {
-        orderService.updateOrderStatus(id, status);
+        return orderService.updateOrderStatus(id, status);
     }
 
     @GetMapping("/{id}/items")

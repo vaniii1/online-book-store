@@ -1,24 +1,26 @@
 package com.example.onlinebookstore.dto.user;
 
 import com.example.onlinebookstore.validation.FieldMatch;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 @FieldMatch(first = "password", second = "repeatPassword")
 public class UserRegistrationRequestDto {
-    @NotBlank
+    @NotNull
     @Size(min = 6, max = 40)
     private String email;
-    @NotBlank
+    @NotNull
     private String firstName;
-    @NotBlank
+    @NotNull
     private String lastName;
-    @NotBlank
+    @NotNull
     @Size(min = 4, max = 50)
     private String password;
-    @NotBlank
+    @NotNull
     @Size(min = 4, max = 50)
     private String repeatPassword;
 }

@@ -12,7 +12,7 @@ public interface OrderService {
 
     OrderResponseDto createOrder(OrderRequestDto request);
 
-    void updateOrderStatus(Long id, OrderStatusDto status);
+    OrderResponseDto updateOrderStatus(Long id, OrderStatusDto status);
 
     List<OrderItemResponseDto> getAllOrderItems(Long id, Pageable pageable);
 
