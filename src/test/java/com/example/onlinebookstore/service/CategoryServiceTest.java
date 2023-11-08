@@ -45,16 +45,12 @@ class CategoryServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-        firstRequest = new CategoryRequestDto().setName("fairy tail");
-        secondRequest = new CategoryRequestDto().setName("detective");
-        firstCategory = new Category().setName(firstRequest.getName());
-        secondCategory = new Category().setName(secondRequest.getName());
-        firstExpected = new CategoryResponseDto()
-                .setId(VALID_ID_ONE)
-                .setName(firstCategory.getName());
-        secondExpected = new CategoryResponseDto()
-                .setId(VALID_ID_TWO)
-                .setName(secondCategory.getName());
+        firstRequest = createFirstRequest();
+        secondRequest = createSecondRequest();
+        firstCategory = createFirstCategory();
+        secondCategory = createSecondCategory();
+        firstExpected = createFirstExpectedCategory();
+        secondExpected = createSecondExpectedCategory();
     }
 
     @Test
@@ -193,5 +189,33 @@ class CategoryServiceTest {
         assertThat(actual).isEqualTo(expected);
         Mockito.verify(categoryRepository, Mockito.times(1)).findById(INVALID_ID_FIVE);
         Mockito.verifyNoMoreInteractions(categoryRepository);
+    }
+
+    private static CategoryRequestDto createFirstRequest() {
+        return new CategoryRequestDto().setName("fairy tail");
+    }
+
+    private static Category createFirstCategory() {
+        return new Category().setName(firstRequest.getName());
+    }
+
+    private static CategoryRequestDto createSecondRequest() {
+        return new CategoryRequestDto().setName("detective");
+    }
+
+    private static Category createSecondCategory() {
+        return new Category().setName(secondRequest.getName());
+    }
+
+    private static CategoryResponseDto createFirstExpectedCategory() {
+        return new CategoryResponseDto()
+                .setId(VALID_ID_ONE)
+                .setName(firstCategory.getName());
+    }
+
+    private static CategoryResponseDto createSecondExpectedCategory() {
+        return new CategoryResponseDto()
+                .setId(VALID_ID_TWO)
+                .setName(secondCategory.getName());
     }
 }

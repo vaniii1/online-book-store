@@ -52,16 +52,15 @@ public class OrderServiceImpl implements OrderService {
                 .forEach(item -> item.addOrder(order));
         order.setTotal(getTotal(order));
         order.setShippingAddress(request.getShippingAddress());
-        orderRepository.save(order);
-        orderItemRepository.saveAll(order.getOrderItems());
+        orderItemRepository.saveAll(orderRepository.save(order).getOrderItems());
         return convertToDtoOrderAndSetItemsDto(order);
     }
 
     @Override
-    public void updateOrderStatus(Long id, OrderStatusDto statusDto) {
+    public OrderResponseDto updateOrderStatus(Long id, OrderStatusDto statusDto) {
         Order order = getOrderById(id);
         order.setStatus(statusDto.getStatus());
-        orderRepository.save(order);
+        return convertToDtoOrderAndSetItemsDto(orderRepository.save(order));
     }
 
     @Override
@@ -113,11 +112,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private ShoppingCart getShoppingCartByUser(User user) {
-        return shoppingCartRepository.findByUser(userService.getCurrentUser())
+        return shoppingCartRepository.findByUser(user)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "There is no Shopping Cart for User: "
-                                        + userService.getCurrentUser()
+                                        + user
                         ));
     }
 

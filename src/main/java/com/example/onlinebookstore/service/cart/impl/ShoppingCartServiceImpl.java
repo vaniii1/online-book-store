@@ -11,7 +11,7 @@ import com.example.onlinebookstore.model.Book;
 import com.example.onlinebookstore.model.CartItem;
 import com.example.onlinebookstore.model.ShoppingCart;
 import com.example.onlinebookstore.model.User;
-import com.example.onlinebookstore.repository.BookRepository;
+import com.example.onlinebookstore.repository.book.BookRepository;
 import com.example.onlinebookstore.repository.cart.ShoppingCartRepository;
 import com.example.onlinebookstore.repository.cartitem.CartItemRepository;
 import com.example.onlinebookstore.service.cart.ShoppingCartService;
@@ -39,13 +39,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public CartResponseDto addBookToCart(CartItemRequestDto request) {
+    public CartItemResponseDto addBookToCart(CartItemRequestDto request) {
         ShoppingCart cart = getOrCreateShoppingCartForCurrentUser();
         CartItem item = itemMapper.toModel(request);
         item.setBook(findBookById(request.getBookId()));
         cart.addItemToCart(item);
         cartItemRepository.save(item);
-        return convertToResponseDto(cart);
+        return itemMapper.toDto(item);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemRepository.delete(cartItem);
     }
 
-    public ShoppingCart getOrCreateShoppingCartForCurrentUser() {
+    private ShoppingCart getOrCreateShoppingCartForCurrentUser() {
         User user = userService.getCurrentUser();
         Optional<ShoppingCart> cart =
                 shoppingCartRepository.findByUser(user);
@@ -91,7 +91,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private CartItem findCartItemById(Long itemId) {
         return cartItemRepository.findById(itemId)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("There is no item with id: " + itemId));
+                        new EntityNotFoundException("There is no Item with id: " + itemId));
     }
 
     private CartResponseDto convertToResponseDto(ShoppingCart cart) {

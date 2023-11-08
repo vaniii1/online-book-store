@@ -1,0 +1,1 @@
+INSERT INTO shopping_carts (id, user_id) values (3, 1);

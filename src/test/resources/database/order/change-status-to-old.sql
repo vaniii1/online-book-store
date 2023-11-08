@@ -1,0 +1,1 @@
+UPDATE orders o SET o.status = 'ON_THE_WAY' WHERE o.id = 1;
