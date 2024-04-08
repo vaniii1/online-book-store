@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "book management",
-        description = "endpoints which indicate a specific action with book")
+@Tag(name = "Book Management",
+        description = "Endpoints which indicate a specific action with book")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/books")
