@@ -45,7 +45,10 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponseDto update(Long id, CategoryRequestDto request) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         if (optionalCategory.isPresent()) {
-            Category category = categoryMapper.toModel(request);
+            Category category = categoryMapper
+                    .updateCategoryModelFromCategoryDto(
+                            optionalCategory.get(), request
+                    );
             category.setId(id);
             return categoryMapper.toDto(categoryRepository.save(category));
         }
