@@ -31,7 +31,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @Accessors(chain = true)
-@SQLDelete(sql = "UPDATE is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE orders SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @Table(name = "orders")
 public class Order {

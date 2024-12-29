@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "category management",
-        description = "endpoints which indicate a specific action with category")
+@Tag(name = "Category Management",
+        description = "Endpoints which indicate a specific action with category")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/categories")
@@ -34,7 +34,7 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @Operation(summary = "Create a new category",
+    @Operation(summary = "Create a New Category",
             description = "Create a new category with appropriate parameters")
     public CategoryResponseDto save(@RequestBody @Valid CategoryRequestDto request) {
         return categoryService.save(request);

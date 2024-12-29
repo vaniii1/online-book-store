@@ -9,15 +9,22 @@ import com.example.onlinebookstore.model.Category;
 import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface BookMapper {
     BookDto toDto(Book book);
 
     Book toModel(CreateBookRequestDto requestDto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book book);
+
+    @Mapping(target = "id", ignore = true)
+    Book updateBookModelFromBookDto(@MappingTarget Book book,
+                                    CreateBookRequestDto bookDto);
 
     @AfterMapping
     default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {

@@ -122,23 +122,28 @@ class CategoryServiceTest {
             """)
     void update_ValidRequest_Ok() {
         CategoryRequestDto updateRequest = new CategoryRequestDto().setName("romance");
-        Category updateCategory = new Category().setName(updateRequest.getName());
-        CategoryResponseDto expected = new CategoryResponseDto().setName(updateCategory.getName());
+        Category updatedCategory = new Category()
+                .setName(updateRequest.getName());
+        CategoryResponseDto expected = new CategoryResponseDto()
+                .setName(updatedCategory.getName());
 
         Mockito.when(categoryRepository.findById(VALID_ID_ONE))
                 .thenReturn(Optional.of(firstCategory));
-        Mockito.when(categoryMapper.toModel(updateRequest)).thenReturn(updateCategory);
-        Mockito.when(categoryRepository.save(updateCategory)).thenReturn(updateCategory);
-        Mockito.when(categoryMapper.toDto(updateCategory)).thenReturn(expected);
+        Mockito.when(
+                categoryMapper.updateCategoryModelFromCategoryDto(firstCategory, updateRequest))
+                .thenReturn(updatedCategory);
+        Mockito.when(categoryRepository.save(updatedCategory)).thenReturn(updatedCategory);
+        Mockito.when(categoryMapper.toDto(updatedCategory)).thenReturn(expected);
 
         CategoryResponseDto actual = categoryService.update(VALID_ID_ONE, updateRequest);
 
         assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);
         Mockito.verify(categoryRepository, Mockito.times(1)).findById(VALID_ID_ONE);
-        Mockito.verify(categoryMapper, Mockito.times(1)).toModel(updateRequest);
-        Mockito.verify(categoryRepository, Mockito.times(1)).save(updateCategory);
-        Mockito.verify(categoryMapper, Mockito.times(1)).toDto(updateCategory);
+        Mockito.verify(categoryMapper, Mockito.times(1))
+                .updateCategoryModelFromCategoryDto(firstCategory, updateRequest);
+        Mockito.verify(categoryRepository, Mockito.times(1)).save(updatedCategory);
+        Mockito.verify(categoryMapper, Mockito.times(1)).toDto(updatedCategory);
         Mockito.verifyNoMoreInteractions(categoryRepository, categoryMapper);
     }
 

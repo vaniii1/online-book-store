@@ -170,7 +170,8 @@ class BookServiceTest {
                 .setCategoryIds(new HashSet<>(Set.of(VALID_ID_ONE)));
 
         when(bookRepository.findById(VALID_ID_ONE)).thenReturn(Optional.of(firstBook));
-        when(bookMapper.toModel(updateRequest)).thenReturn(updateBook);
+        when(bookMapper.updateBookModelFromBookDto(firstBook, updateRequest))
+                .thenReturn(updateBook);
         when(bookRepository.save(updateBook)).thenReturn(updateBook);
         when(bookMapper.toDto(updateBook)).thenReturn(updateExpect);
         when(categoryRepository.findById(VALID_ID_ONE)).thenReturn(Optional.of(category));
@@ -180,7 +181,8 @@ class BookServiceTest {
         assertThat(actual).isEqualTo(updateExpect);
         verify(bookRepository, Mockito.times(1)).findById(VALID_ID_ONE);
         verify(bookRepository, Mockito.times(1)).save(updateBook);
-        verify(bookMapper, Mockito.times(1)).toModel(updateRequest);
+        verify(bookMapper, Mockito.times(1))
+                .updateBookModelFromBookDto(firstBook, updateRequest);
         verify(bookMapper, Mockito.times(1)).toDto(updateBook);
         verify(categoryRepository, Mockito.times(1)).findById(VALID_ID_ONE);
         verifyNoMoreInteractions(bookRepository, bookMapper, categoryRepository);
