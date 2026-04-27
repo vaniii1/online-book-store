@@ -44,7 +44,7 @@ public class OrderController {
         return orderService.createOrder(request);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/{id}")
     @Operation(summary = "Update a status of an Order",
             description = "Update a status of an Order by it's Id")

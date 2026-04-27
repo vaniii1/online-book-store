@@ -65,7 +65,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @Sql(scripts = "classpath:database/category/delete-category-to-save.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void save_ValidRequest_Ok() throws Exception {
@@ -93,7 +93,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     void getById_ValidId_Ok() throws Exception {
         MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders.get("/categories/1")
@@ -111,7 +111,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     void getAll_ValidRequest_Ok() throws Exception {
         List<CategoryResponseDto> expected = List.of(firstExpected, secondExpected, thirdExpected);
         MvcResult result = mockMvc.perform(
@@ -128,7 +128,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @Sql(scripts = "classpath:database/category/add-category-with-id-4.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/category/delete-category-with-id-4.sql",
@@ -155,7 +155,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @Sql(scripts = "classpath:database/category/add-category-with-id-4.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/category/delete-category-with-id-4.sql",
@@ -170,7 +170,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     @Sql(scripts = "classpath:database/book/add-five-books.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/book/add-categories-to-books.sql",

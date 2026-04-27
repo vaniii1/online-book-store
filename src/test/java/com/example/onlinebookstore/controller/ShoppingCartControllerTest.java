@@ -77,7 +77,7 @@ class ShoppingCartControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@com", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin@com", authorities = {"ADMIN"})
     @DisplayName("""
             Must return cart
             """)
@@ -114,7 +114,7 @@ class ShoppingCartControllerTest {
     @Test
     @Sql(scripts = "classpath:database/cartitem/delete-cart-item-6.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    @WithMockUser(username = "user@com", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user@com", authorities = {"USER"})
     @DisplayName("""
             Must add Book to Cart 
             """)
@@ -144,7 +144,7 @@ class ShoppingCartControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user@com", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user@com", authorities = {"USER"})
     @DisplayName("""
             Must update quantity of CartItem 
             """)
@@ -173,7 +173,7 @@ class ShoppingCartControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user@com", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user@com", authorities = {"USER"})
     @DisplayName("""
             Must delete Item from ShoppingCart
             """)

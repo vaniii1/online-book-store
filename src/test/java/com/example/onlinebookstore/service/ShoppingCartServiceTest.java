@@ -23,6 +23,7 @@ import com.example.onlinebookstore.repository.cart.ShoppingCartRepository;
 import com.example.onlinebookstore.repository.cartitem.CartItemRepository;
 import com.example.onlinebookstore.service.cart.impl.ShoppingCartServiceImpl;
 import com.example.onlinebookstore.service.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Optional;
@@ -204,8 +205,7 @@ class ShoppingCartServiceTest {
     void deleteBook_InvalidId_ThrowsException() {
         when(cartItemRepository.findById(INVALID_ID)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(
-                com.example.onlinebookstore.exception.EntityNotFoundException.class,
+        Exception exception = assertThrows(EntityNotFoundException.class,
                 () -> cartService.deleteItemFromShoppingCart(INVALID_ID)
         );
 
@@ -231,8 +231,7 @@ class ShoppingCartServiceTest {
         when(cartRepository.findByUser(user)).thenReturn(Optional.of(shoppingCart));
         when(itemMapper.toModel(request)).thenReturn(item);
 
-        Exception exception = Assertions.assertThrows(
-                com.example.onlinebookstore.exception.EntityNotFoundException.class,
+        Exception exception = Assertions.assertThrows(EntityNotFoundException.class,
                 () -> cartService.addBookToCart(request)
         );
 

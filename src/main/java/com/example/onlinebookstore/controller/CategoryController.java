@@ -33,7 +33,7 @@ public class CategoryController {
     private final BookService bookService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Create a New Category",
             description = "Create a new category with appropriate parameters")
     public CategoryResponseDto save(@RequestBody @Valid CategoryRequestDto request) {
@@ -54,7 +54,7 @@ public class CategoryController {
         return categoryService.findAll(pageable);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update a category",
             description = "Update a category by existing id and new params")
@@ -63,11 +63,11 @@ public class CategoryController {
         return categoryService.update(id, request);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete a category",
             description = "Delete a category that is stored in DB by certain id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) {
         categoryService.deleteById(id);
     }

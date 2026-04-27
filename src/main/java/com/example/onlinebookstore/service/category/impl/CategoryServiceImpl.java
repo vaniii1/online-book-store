@@ -2,11 +2,11 @@ package com.example.onlinebookstore.service.category.impl;
 
 import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import com.example.onlinebookstore.dto.category.CategoryResponseDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.CategoryMapper;
 import com.example.onlinebookstore.model.Category;
 import com.example.onlinebookstore.repository.category.CategoryRepository;
 import com.example.onlinebookstore.service.category.CategoryService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

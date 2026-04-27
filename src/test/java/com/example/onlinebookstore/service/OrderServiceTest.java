@@ -10,7 +10,6 @@ import com.example.onlinebookstore.dto.order.OrderItemResponseDto;
 import com.example.onlinebookstore.dto.order.OrderRequestDto;
 import com.example.onlinebookstore.dto.order.OrderResponseDto;
 import com.example.onlinebookstore.dto.order.OrderStatusDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.OrderItemMapper;
 import com.example.onlinebookstore.mapper.OrderMapper;
 import com.example.onlinebookstore.model.Book;
@@ -24,6 +23,7 @@ import com.example.onlinebookstore.repository.order.OrderRepository;
 import com.example.onlinebookstore.repository.orderitem.OrderItemRepository;
 import com.example.onlinebookstore.service.order.impl.OrderServiceImpl;
 import com.example.onlinebookstore.service.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -287,7 +287,7 @@ class OrderServiceTest {
                 () -> orderService.createOrder(new OrderRequestDto())
         );
         String actual = exception.getMessage();
-        String expected = "There is no Shopping Cart for User: " + user;
+        String expected = "There is no Shopping Cart for User with id: " + user.getId();
 
         assertThat(actual).isNotNull();
         assertThat(actual).isEqualTo(expected);

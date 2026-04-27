@@ -54,9 +54,9 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + Role.RoleName.USER.name()));
+        authorities.add(new SimpleGrantedAuthority(Role.RoleName.USER.name()));
         if (email.contains("admin@")) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + Role.RoleName.ADMIN.name()));
+            authorities.add(new SimpleGrantedAuthority(Role.RoleName.ADMIN.name()));
         }
         return authorities;
     }

@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.onlinebookstore.dto.category.CategoryRequestDto;
 import com.example.onlinebookstore.dto.category.CategoryResponseDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.CategoryMapper;
 import com.example.onlinebookstore.model.Category;
 import com.example.onlinebookstore.repository.category.CategoryRepository;
 import com.example.onlinebookstore.service.category.impl.CategoryServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
