@@ -2,7 +2,6 @@ package com.example.onlinebookstore.service.user.impl;
 
 import com.example.onlinebookstore.dto.user.UserRegistrationRequestDto;
 import com.example.onlinebookstore.dto.user.UserRegistrationResponseDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.exception.RegistrationException;
 import com.example.onlinebookstore.mapper.UserMapper;
 import com.example.onlinebookstore.model.Role;
@@ -10,6 +9,7 @@ import com.example.onlinebookstore.model.User;
 import com.example.onlinebookstore.repository.role.RoleRepository;
 import com.example.onlinebookstore.repository.user.UserRepository;
 import com.example.onlinebookstore.service.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;

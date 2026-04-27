@@ -80,7 +80,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@com", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin@com", authorities = {"ADMIN"})
     @DisplayName("""
             Must return expected Order 
             """)
@@ -119,7 +119,7 @@ public class OrderControllerTest {
     @Test
     @Sql(scripts = "classpath:database/order/change-status-to-old.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    @WithMockUser(username = "admin@com", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin@com", authorities = {"ADMIN"})
     @DisplayName("""
             Must update status
             """)
@@ -205,7 +205,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user@com", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user@com", authorities = {"USER"})
     @DisplayName("""
             Must return all Items of the exact Order
             """)
@@ -240,7 +240,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@com", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin@com", authorities = {"ADMIN"})
     @DisplayName("""
             Must return the exact Item of the exact Order 
             """)

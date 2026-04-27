@@ -87,7 +87,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     @DisplayName("""
             Must return all books stored in database
             """)
@@ -112,7 +112,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @DisplayName("""
             Must create a book with valid request
             """)
@@ -153,7 +153,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     @DisplayName("""
             Must return secondExpected with id 2
             """)
@@ -176,7 +176,7 @@ class BookControllerTest {
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/book/delete-book-with-id-6.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @DisplayName("""
             Must delete book with valid id
             """)
@@ -190,7 +190,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     @Sql(scripts = "classpath:database/book/add-book-to-update.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/book/delete-book-with-id-6-connections.sql",
@@ -232,7 +232,7 @@ class BookControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", authorities = {"ROLE_USER"})
+    @WithMockUser(username = "user", authorities = {"USER"})
     @DisplayName("""
             Must return all books with from certain price 
             """)

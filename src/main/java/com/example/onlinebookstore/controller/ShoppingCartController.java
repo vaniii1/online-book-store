@@ -54,9 +54,9 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/cart-items/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete an Item(Book) from Shopping Cart",
             description = "Delete a CartItem that is in your Shopping Cart by it's Id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItemFromShoppingCart(@PathVariable Long id) {
         shoppingCartService.deleteItemFromShoppingCart(id);
     }

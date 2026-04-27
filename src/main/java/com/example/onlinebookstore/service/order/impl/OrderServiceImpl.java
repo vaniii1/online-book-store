@@ -4,7 +4,6 @@ import com.example.onlinebookstore.dto.order.OrderItemResponseDto;
 import com.example.onlinebookstore.dto.order.OrderRequestDto;
 import com.example.onlinebookstore.dto.order.OrderResponseDto;
 import com.example.onlinebookstore.dto.order.OrderStatusDto;
-import com.example.onlinebookstore.exception.EntityNotFoundException;
 import com.example.onlinebookstore.mapper.OrderItemMapper;
 import com.example.onlinebookstore.mapper.OrderMapper;
 import com.example.onlinebookstore.model.Order;
@@ -16,6 +15,7 @@ import com.example.onlinebookstore.repository.order.OrderRepository;
 import com.example.onlinebookstore.repository.orderitem.OrderItemRepository;
 import com.example.onlinebookstore.service.order.OrderService;
 import com.example.onlinebookstore.service.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -115,8 +115,8 @@ public class OrderServiceImpl implements OrderService {
         return shoppingCartRepository.findByUser(user)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
-                                "There is no Shopping Cart for User: "
-                                        + user
+                                "There is no Shopping Cart for User with id: "
+                                        + user.getId()
                         ));
     }
 
