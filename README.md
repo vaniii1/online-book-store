@@ -30,7 +30,7 @@
 - 👤 **Users** — browse and search books by category, manage a personal shopping cart, and place orders
 - 🛠️ **Admins** — create, update, and delete books and categories, and manage order statuses
 
-Any user whose email contains `admin@` is automatically assigned `ROLE_ADMIN` on registration.
+Any user whose email contains `..admin@..` is automatically assigned `ROLE_ADMIN` on registration.
 
 ---
 
